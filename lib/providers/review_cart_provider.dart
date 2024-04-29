@@ -10,7 +10,9 @@ class ReviewCartProvider with ChangeNotifier {
     required String cartImage,
     required String cartName,
     required int cartPrice,
-    required int cartQuantity,}) async {
+    required int cartQuantity,
+    var cartUnit,
+      }) async {
     await FirebaseFirestore.instance
         .collection("ReviewCart")
         .doc(FirebaseAuth.instance.currentUser?.uid)
@@ -23,9 +25,43 @@ class ReviewCartProvider with ChangeNotifier {
           "cartName": cartName,
           "cartPrice": cartPrice,
           "cartQuantity": cartQuantity,
+          "cartUnit": cartUnit,
+          "isAdd":true
         }
     );
   }
+  void updateReviewCartData({
+    required String cartId,
+    required String cartImage,
+    required String cartName,
+    required int cartPrice,
+    required int cartQuantity,
+
+  }) async {
+    await FirebaseFirestore.instance
+        .collection("ReviewCart")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("YourReviewCart")
+        .doc(cartId)
+        .update(
+        {
+          "cartId": cartId,
+          "cartImage": cartImage,
+          "cartName": cartName,
+          "cartPrice": cartPrice,
+          "cartQuantity": cartQuantity,
+          "isAdd":true
+        }
+    );
+  }
+
+
+
+
+
+
+
+
 
   List<ReviewCartModel> reviewCartDataList = [];
 
@@ -42,6 +78,7 @@ class ReviewCartProvider with ChangeNotifier {
         cartName: element.get("cartName"),
         cartPrice: element.get("cartPrice"),
         cartQuantity: element.get("cartQuantity"),
+        cartUnit: element.get("cartUnit"),
       );
       newList.add(reviewCartModel);
     });
@@ -49,7 +86,27 @@ class ReviewCartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  List<ReviewCartModel >get getReviewCartDataList {
+  List<ReviewCartModel> get getReviewCartDataList {
     return reviewCartDataList;
+  }
+///////////////////Total Price////////////////////////////////////
+  getTotalPrice(){
+    double total=0.0;
+    reviewCartDataList.forEach((element) {
+      total += element.cartPrice* element.cartQuantity;
+    });
+    return total;
+  }
+
+////////////////////ReviewDeleteFunction///////////////////////////
+
+  reviewCartDataDelete(cartId) {
+    FirebaseFirestore.instance
+        .collection("ReviewCart")
+        .doc(FirebaseAuth.instance.currentUser?.uid)
+        .collection("YourReviewCart")
+        .doc(cartId)
+        .delete();
+    notifyListeners();
   }
 }

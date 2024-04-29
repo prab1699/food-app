@@ -1,7 +1,6 @@
 
 
-import 'dart:collection';
-
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:food_app/models/product_model.dart';
@@ -17,6 +16,8 @@ List<ProductModel> search=[];
       productName: element.get("productName"),
       productPrice: element.get("productPrice"),
       productId: element.get("productId"),
+      productQuantity:0,
+      productUnit: element.get("productUnit") ,
     );
     search.add(productModel);
   }

@@ -9,4 +9,13 @@ class UserModel {
     required this.userImage,
     required this.userUid,
   });
-}
+
+  //toJson() {
+   // return {
+     // "UserName": userName,
+      //"userEmail": userEmail,
+      //"userImage": userImage,
+      //"userUId": userUid,
+   // };
+ // }
+  }

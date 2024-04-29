@@ -9,6 +9,7 @@ import '../../config/colors.dart';
 
 import '../../providers/user_provider.dart';
 import '../product_overview/product_overview.dart';
+import '../review_cart/review_cart.dart';
 import '../search/search.dart';
 import 'package:provider/provider.dart';
 
@@ -56,13 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   productPrice: herbsProductData.productPrice,
                                   productName: herbsProductData.productName,
                                   productImage: herbsProductData.productImage,
+                                  productId: herbsProductData.productId,
                                 )),
                       );
                     },
                     productId: herbsProductData.productId,
                     productPrice: herbsProductData.productPrice,
                     productImage: herbsProductData.productImage,
-                    productName: herbsProductData.productName, );
+                    productName: herbsProductData.productName,
+                    productUnit: herbsProductData);
               },
             ).toList(),
           ),
@@ -107,13 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   productPrice: freshProductData.productPrice,
                                   productName: freshProductData.productName,
                                   productImage: freshProductData.productImage,
+                              productId: freshProductData.productId,
                                 )),
                       );
                     },
                     productId: freshProductData.productId,
                     productPrice: freshProductData.productPrice,
                     productImage: freshProductData.productImage,
-                    productName: freshProductData.productName);
+                    productName: freshProductData.productName,
+                    productUnit: freshProductData,);
               },
             ).toList(),
           ),
@@ -158,13 +163,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   productPrice: rootProductData.productPrice,
                                   productName: rootProductData.productName,
                                   productImage: rootProductData.productImage,
+                                   productId: rootProductData.productId,
+
                                 )),
                       );
                     },
                     productId: rootProductData.productId,
                     productPrice: rootProductData.productPrice,
                     productImage: rootProductData.productImage,
-                    productName: rootProductData.productName);
+                    productName: rootProductData.productName,
+                    productUnit: rootProductData,);
               },
             ).toList(),
           ),
@@ -215,16 +223,27 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 5)),
-          CircleAvatar(
-            radius: 15,
-            backgroundColor: Color(0Xffd6d382),
-            child: Icon(
-              Icons.shop,
-              size: 17,
-              color: textColor,
+          Padding
+            (padding: EdgeInsets.symmetric(horizontal: 5),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ReviewCart(),
+                ),
+              );
+            },
+            child: CircleAvatar(
+              radius: 15,
+              backgroundColor: Color(0Xffd6d382),
+              child: Icon(
+                Icons.shop,
+                size: 17,
+                color: textColor,
+              ),
             ),
           ),
+          )
         ],
       ),
       body: Padding(

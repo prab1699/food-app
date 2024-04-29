@@ -5,6 +5,7 @@ import 'package:food_app/config/colors.dart';
 import 'package:food_app/providers/product_provider.dart';
 import 'package:food_app/providers/review_cart_provider.dart';
 import 'package:food_app/providers/user_provider.dart';
+import 'package:food_app/providers/wish_list_provider.dart';
 import 'package:food_app/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ReviewCartProvider>(
           create: (context) => ReviewCartProvider(),
         ),
+    ChangeNotifierProvider<WishListProvider>(
+    create: (context) =>WishListProvider(),
+    ),
       ],
       child: MaterialApp(
         theme: ThemeData(

@@ -3,6 +3,7 @@ import 'package:food_app/providers/user_provider.dart';
 import 'package:food_app/screens/home/home_screen.dart';
 import 'package:food_app/screens/my_profile/my_profile.dart';
 import 'package:food_app/screens/review_cart/review_cart.dart';
+import 'package:food_app/screens/wishList/wish_list.dart';
 
 
 
@@ -116,7 +117,12 @@ class _DrawerSideState extends State<DrawerSide> {
                 title: "Rating & Review",
                 onTap: () {}),
             listTile(
-                icon: Icons.favorite_outlined, title: "Wishlist", onTap: () {}),
+                icon: Icons.favorite_outlined, title: "Wishlist", onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => WishList(),
+                ),
+              );
+            }),
             listTile(
                 icon: Icons.copy_outlined,
                 title: "Raise a Complaint",
