@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/config/colors.dart';
+import 'package:food_app/providers/check_out_provider.dart';
+import 'package:food_app/screens/check_out/google_map/google_map.dart';
+import 'package:provider/provider.dart';
 
 import '../../../widgets/custom_text_field.dart';
 
@@ -18,6 +21,8 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
 
   @override
   Widget build(BuildContext context) {
+
+    CheckoutProvider checkoutProvider= Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,8 +35,10 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         width: 160,
         height: 48,
-        child: MaterialButton(
-          onPressed: () {},
+        child:checkoutProvider.isloading==false? MaterialButton(
+          onPressed: () {
+            checkoutProvider.validator(context,myType);
+          },
           child: Text(
             "Add Address",
             style: TextStyle(
@@ -44,6 +51,8 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
               30,
             ),
           ),
+        ):Center(
+          child: CircularProgressIndicator(),
         ),
       ),
       body: Padding(
@@ -54,64 +63,69 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
           children: [
            CustomTextField(
              labText: "First Name",
-             keyboardType: TextInputType.text, controller: null,
+             keyboardType: TextInputType.text, controller: checkoutProvider.firstName,
 
             ),
             CustomTextField(
               labText: "Last Name",
                 keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.lastName,
             ),
             CustomTextField(
               labText: "Mobile No",
               keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.mobileNo,
 
             ),
             CustomTextField(
               labText: "Alternate Mobile No",
               keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.alternateMobileNo,
 
             ),
             CustomTextField(
               labText: "House No",
               keyboardType: TextInputType.text,
-              controller:null,
+              controller:checkoutProvider.houseNo,
 
             ),
             CustomTextField(
               labText: "Area",
               keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.area,
 
             ),
             CustomTextField(
               labText: "Landmark",
               keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.landmark,
 
             ),
             CustomTextField(
               labText: "City",
               keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.city,
 
             ),
             CustomTextField(
               labText: "State",
               keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.state,
 
             ),
             CustomTextField(
               labText: "Pincode",
               keyboardType: TextInputType.text,
-              controller: null,
+              controller: checkoutProvider.pincode,
 
             ),
             InkWell(
-              onTap:(){},
+              onTap:(){
+                Navigator.of(context).push(MaterialPageRoute
+                  ( builder: (context)=>CustomGoogleMap(),
+                ),
+                );
+              },
               child: Container(
                 height: 47,
                 width: double.infinity,
@@ -119,7 +133,7 @@ class _AddDeliveryAddressState extends State<AddDeliveryAddress> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Set Location")
+                    checkoutProvider.setLocation.longitude == null && checkoutProvider.setLocation.latitude == null ? Text("Set Location") : Text("Done!"),
                   ],
                 ),
 

@@ -80,7 +80,7 @@ class _WishListState extends State<WishList> {
                 wishList: true,
                 onDelete: (){
                   showAlertDialog(context,data);
-                }, productUnit: "",
+                }, productUnit: "250gm",
               ),
             ],
           );
