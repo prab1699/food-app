@@ -8,6 +8,7 @@ import 'package:food_app/screens/check_out/payment_summary/order_item.dart';
 import 'package:provider/provider.dart';
 
 import '../delivery_details/single_delivery_item.dart';
+import 'my_google_pay.dart';
 
 class PaymentSummary extends StatefulWidget {
   final DeliveryAddressModel deliveryAddressList;
@@ -28,18 +29,17 @@ class _PaymentSummaryState extends State<PaymentSummary> {
   Widget build(BuildContext context) {
     ReviewCartProvider reviewCartProvider = Provider.of(context);
     reviewCartProvider.getReviewCartData();
-    double discount=30;
+    double discount = 30;
     double discountValue = 0;
     double total;
     double shippingCharge = 30.0;
-    double totalPrice=reviewCartProvider.getTotalPrice();
-      if (totalPrice > 200) {
-        discountValue = (totalPrice * discount) / 100;
-        total = totalPrice - discountValue;
-      } else {
-        total = totalPrice; // Ensure total is always initialized
-      } // Ensure total is always initialized
-
+    double totalPrice = reviewCartProvider.getTotalPrice();
+    if (totalPrice > 200) {
+      discountValue = (totalPrice * discount) / 100;
+      total = totalPrice - discountValue;
+    } else {
+      total = totalPrice; // Ensure total is always initialized
+    } // Ensure total is always initialized
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +52,7 @@ class _PaymentSummaryState extends State<PaymentSummary> {
       bottomNavigationBar: ListTile(
         title: Text("Total Amount"),
         subtitle: Text(
-          "₹${total+30??totalPrice}",
+          "₹${total + 30 ?? totalPrice}",
           style: TextStyle(
             color: Colors.green[900],
             fontWeight: FontWeight.bold,
@@ -63,7 +63,15 @@ class _PaymentSummaryState extends State<PaymentSummary> {
           width: 160,
           child: MaterialButton(
             onPressed: () {
-
+              myType == AddressTypes.OnlinePayment
+                  ? Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => MyGooglePay(
+                          total: total,
+                        ),
+                      ),
+                    )
+                  : Container();
             },
             child: Text(
               "Place Order",
@@ -100,9 +108,12 @@ class _PaymentSummaryState extends State<PaymentSummary> {
                   Divider(),
                   ExpansionTile(
                     children: reviewCartProvider.getReviewCartDataList.map((e) {
-                      return OrderItem(e: e,);
+                      return OrderItem(
+                        e: e,
+                      );
                     }).toList(),
-                    title: Text("Order Items ${reviewCartProvider.getReviewCartDataList.length}"),
+                    title: Text(
+                        "Order Items ${reviewCartProvider.getReviewCartDataList.length}"),
                   ),
                   Divider(),
                   ListTile(
