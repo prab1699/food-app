@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:food_app/config/colors.dart';
+import '../../auth/sign_in.dart';
 import '../../providers/user_provider.dart';
 import '../home/drawer_side.dart';
 
 class MyProfile extends StatelessWidget {
+  void _logout(BuildContext context) {
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(
+        builder: (context) => SignIn()));
+  }
 
-  Widget listTile({required IconData icon, required String title}) {
+  Widget listTile({required IconData icon,required String title,required onTap(), required Color tileColor }) {
     return Column(
       children: [
         Divider(
           height: 1,
         ),
         ListTile(
+          tileColor: scaffoldBackgroundColor,
           leading: Icon(icon),
           title: Text(title),
           trailing: Icon(Icons.arrow_forward_ios),
@@ -97,18 +104,82 @@ class MyProfile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    listTile(icon: Icons.shop_outlined, title: "My Orders"),
-                    listTile(icon: Icons.location_on_outlined, title: "My Delivery address"),
-                    listTile(icon: Icons.person_outline, title: "Refer A Friends"),
-                    listTile(icon: Icons.file_copy, title: "Terms & Conditions"),
-                    listTile(icon: Icons.policy_outlined, title: "Privacy Policy"),
-                    listTile(icon: Icons.add_chart_outlined, title: "About"),
-                    listTile(icon: Icons.exit_to_app_outlined, title: "Log Out"),
+                    listTile(
+                      tileColor: scaffoldBackgroundColor,
+                      icon: Icons.shop_outlined,
+                      title: "My Orders",
+                      onTap: () {
+                        // Handle My Orders tap
+                      },
+                    ),
+                    listTile(
+                      tileColor: scaffoldBackgroundColor,
+                      icon: Icons.location_on_outlined,
+                      title: "My Delivery address",
+                      onTap: () {
+                        // Handle My Delivery address tap
+                      },
+                    ),
+                    listTile(
+                      tileColor: scaffoldBackgroundColor,
+                      icon: Icons.person_outline,
+                      title: "Refer A Friends",
+                      onTap: () {
+                        // Handle Refer A Friends tap
+                      },
+                    ),
+                    listTile(
+                      tileColor: scaffoldBackgroundColor,
+                      icon: Icons.file_copy,
+                      title: "Terms & Conditions",
+                      onTap: () {
+                        // Handle Terms & Conditions tap
+                      },
+                    ),
+                    listTile(
+                      tileColor: scaffoldBackgroundColor,
+                      icon: Icons.policy_outlined,
+                      title: "Privacy Policy",
+                      onTap: () {
+                        // Handle Privacy Policy tap
+                      },
+                    ),
+                    listTile(
+                      tileColor: scaffoldBackgroundColor,
+                      icon: Icons.add_chart_outlined,
+                      title: "About",
+                      onTap: () {
+                        // Handle About tap
+                      },
+                    ),
                   ],
                 ),
               ),
             ],
           ),
+          Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  _logout(context); // Call the logout function
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ), backgroundColor:  Color(0xffcbcbcb),
+                  padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                ),
+                child: Text(
+                  "Log Out",
+                  style: TextStyle(color: Colors.black87,fontSize: 16),
+                ),
+              ),
+            ),
+          ),
+
           Padding(
             padding: const EdgeInsets.only(top: 40, left: 30),
             child: CircleAvatar(

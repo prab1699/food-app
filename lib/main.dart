@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:food_app/auth/sign_in.dart';
 import 'package:food_app/config/colors.dart';
 import 'package:food_app/providers/check_out_provider.dart';
@@ -12,12 +13,15 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding=WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await Future.delayed(Duration(seconds:1),);
+  FlutterNativeSplash.remove();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MyApp());
+      runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
