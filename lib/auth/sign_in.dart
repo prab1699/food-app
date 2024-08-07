@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,41 +20,42 @@ class _SignInState extends State<SignIn> {
   bool isLoading = false;
   late UserProvider userProvider;
 
+
   _googleSignUp() async {
-    try {
-      final GoogleSignIn _googleSignIn = GoogleSignIn(
-        scopes: ['email'],
-      );
-      final FirebaseAuth _auth = FirebaseAuth.instance;
+  try {
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: ['email'],
+  );
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
+  final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+  final GoogleSignInAuthentication? googleAuth =
+  await googleUser?.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
+  final AuthCredential credential = GoogleAuthProvider.credential(
+  accessToken: googleAuth?.accessToken,
+  idToken: googleAuth?.idToken,
+  );
 
-      final User? user = (await _auth.signInWithCredential(credential)).user;
-      print("signed in " + user!.displayName!);
-      print("signed in " + user.email!);
-      print("signed in " + user.photoURL!);
+  final User? user = (await _auth.signInWithCredential(credential)).user;
+  print("signed in " + user!.displayName!);
+  print("signed in " + user.email!);
+  print("signed in " + user.photoURL!);
 
-      userProvider.addUserData(
-        currentUser: user,
-        userEmail: user.email!,
-        userImage: user.photoURL!,
-        userName: user.displayName!,
-      );
+  userProvider.addUserData(
+  currentUser: user,
+  userEmail: user.email!,
+  userImage: user.photoURL!,
+  userName: user.displayName!,
+  );
 
-      return user;
-    } catch (e) {
-      print(e.toString());
-    }
+  return user;
+  } catch (e) {
+  print(e.toString());
+  }
   }
 
-  @override
+      @override
   Widget build(BuildContext context) {
     userProvider = Provider.of<UserProvider>(context);
     return Scaffold(

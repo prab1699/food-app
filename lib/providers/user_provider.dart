@@ -9,7 +9,7 @@ class UserProvider with ChangeNotifier {
         required String userName,
         required String userImage,
         required String userEmail}) async {
-    await FirebaseFirestore.instance.collection("usersData").doc(currentUser.uid).set({
+    await FirebaseFirestore.instance.collection("users").doc(currentUser.uid).set({
       "userName": userName,
       "userEmail": userEmail,
       "userImage": userImage,
@@ -22,7 +22,7 @@ class UserProvider with ChangeNotifier {
   void getUserData() async {
     UserModel userModel;
     var value = await FirebaseFirestore.instance
-        .collection("usersData")
+        .collection("users")
         .doc(FirebaseAuth.instance.currentUser?.uid)
         .get();
     if (value.exists) {
